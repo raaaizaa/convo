@@ -9,9 +9,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.example.convo_app.R;
-import com.example.convo_app.fragment_home;
-import com.example.convo_app.fragment_notification;
-import com.example.convo_app.fragment_profile;
+import com.example.convo_app.fragments.fragment_home;
+import com.example.convo_app.fragments.fragment_notification;
+import com.example.convo_app.fragments.fragment_profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class home extends AppCompatActivity {

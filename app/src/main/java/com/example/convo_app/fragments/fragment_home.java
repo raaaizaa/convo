@@ -1,9 +1,8 @@
-package com.example.convo_app;
+package com.example.convo_app.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.convo_app.R;
 import com.example.convo_app.adapters.post_adapter;
 import com.example.convo_app.models.post;
 import com.example.convo_app.utils.post_database_helper;
@@ -83,7 +83,6 @@ public class fragment_home extends Fragment {
             }
         }, Throwable::printStackTrace);
         requestQueue.add(request);
-
 
     }
 

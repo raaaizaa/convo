@@ -1,13 +1,20 @@
 package com.example.convo_app.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.convo_app.models.post;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class post_database_helper extends SQLiteOpenHelper {
     public static final String POST_DB = "post.db";
+    List<post> posts;
 
     public post_database_helper(Context context) {
         super(context, POST_DB, null, 1);
@@ -45,6 +52,31 @@ public class post_database_helper extends SQLiteOpenHelper {
         boolean result = cursor.getCount() > 0;
         cursor.close();
         return result;
+    }
+
+    @SuppressLint("Range")
+    public List<post> viewPost(Integer userId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM post WHERE userId = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(userId)});
+
+        posts = new ArrayList<>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Integer id = cursor.getInt(cursor.getColumnIndex("id"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String body = cursor.getString(cursor.getColumnIndex("body"));
+
+                post post = new post(userId, id, title, body);
+                posts.add(post);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return posts;
     }
 
     private ContentValues inputPost(Integer id, Integer userId, String title, String body) {

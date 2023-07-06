@@ -2,8 +2,10 @@ package com.example.convo_app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.convo_app.R;
@@ -11,7 +13,7 @@ import com.example.convo_app.R;
 public class detailed_post extends AppCompatActivity {
     private ImageView backButton;
     private TextView nameTextview, usernameTextview, titleTextview, bodyTextview;
-
+    private LinearLayout userContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class detailed_post extends AppCompatActivity {
         usernameTextview = findViewById(R.id.post_username);
         titleTextview = findViewById(R.id.post_title);
         bodyTextview = findViewById(R.id.post_body);
+        userContainer = findViewById(R.id.user_container);
 
         String userId = getIntent().getStringExtra("userId");
         String personName = getIntent().getStringExtra("personName");
@@ -34,12 +37,24 @@ public class detailed_post extends AppCompatActivity {
         String title = getIntent().getStringExtra("title");
         String body = getIntent().getStringExtra("body");
 
-        setListener();
+        setListener(userId, personName, username);
         setContent(personName, username, title, body);
     }
 
-    private void setListener() {
+    private void setListener(String userId, String personName, String username) {
         backButton.setOnClickListener(e -> finish());
+
+        userContainer.setOnClickListener(e -> {
+            startProfile(userId, personName, username);
+        });
+    }
+
+    private void startProfile(String userId, String personName, String username) {
+        Intent intent = new Intent(this, profile.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("personName", personName);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
     private void setContent(String personName, String username, String title, String body){

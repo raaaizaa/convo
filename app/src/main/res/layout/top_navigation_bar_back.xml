@@ -9,6 +9,7 @@
         android:layout_height="48dp"
         android:layout_columnWeight="0.1"
         android:layout_gravity="center_vertical"
+        android:foreground="@drawable/clicked"
         android:src="@drawable/baseline_arrow_back_24" />
 
     <TextView

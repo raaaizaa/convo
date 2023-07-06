@@ -1,4 +1,4 @@
-package com.example.convo_app;
+package com.example.convo_app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,6 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import com.example.convo_app.R;
+import com.example.convo_app.fragment_home;
+import com.example.convo_app.fragment_notification;
+import com.example.convo_app.fragment_profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class home extends AppCompatActivity {

@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.convo_app.R;
 
 public class detailed_post extends AppCompatActivity {
-    private ImageView backButton;
+    private ImageView backButton, commentButton, likeButton, saveButton;
     private TextView nameTextview, usernameTextview, titleTextview, bodyTextview;
     private LinearLayout userContainer;
 
@@ -30,12 +31,16 @@ public class detailed_post extends AppCompatActivity {
         titleTextview = findViewById(R.id.post_title);
         bodyTextview = findViewById(R.id.post_body);
         userContainer = findViewById(R.id.user_container);
+        commentButton = findViewById(R.id.comment_button);
+        likeButton = findViewById(R.id.like_button);
+        saveButton = findViewById(R.id.save_button);
 
         String userId = getIntent().getStringExtra("userId");
         String personName = getIntent().getStringExtra("personName");
         String username = getIntent().getStringExtra("username");
         String title = getIntent().getStringExtra("title");
         String body = getIntent().getStringExtra("body");
+        Integer notificationCounter = getIntent().getIntExtra("notificationCounter", 0);
 
         setListener(userId, personName, username);
         setContent(personName, username, title, body);
@@ -47,6 +52,10 @@ public class detailed_post extends AppCompatActivity {
         userContainer.setOnClickListener(e -> {
             startProfile(userId, personName, username);
         });
+
+        commentButton.setOnClickListener(e -> showToast("You're not logged in!"));
+        likeButton.setOnClickListener(e -> showToast("You're not logged in!"));
+        saveButton.setOnClickListener(e -> showToast("You're not logged in!"));
     }
 
     private void startProfile(String userId, String personName, String username) {
@@ -62,5 +71,9 @@ public class detailed_post extends AppCompatActivity {
         usernameTextview.setText(username);
         titleTextview.setText(title);
         bodyTextview.setText(body);
+    }
+
+    private void showToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

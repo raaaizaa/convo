@@ -44,6 +44,32 @@ public class post_database_helper extends SQLiteOpenHelper {
         }
     }
 
+    @SuppressLint("Range")
+    public List<post> viewAllPost(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM post";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        posts = new ArrayList<>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Integer userId = cursor.getInt(cursor.getColumnIndex("userId"));
+                Integer id = cursor.getInt(cursor.getColumnIndex("id"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String body = cursor.getString(cursor.getColumnIndex("body"));
+
+                post post = new post(userId, id, title, body);
+                posts.add(post);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return posts;
+    }
+
     public boolean checkPost(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT * FROM post WHERE id = ?";

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "561824044907",
+    "project_id": "convo-push-notification-2a81c",
+    "storage_bucket": "convo-push-notification-2a81c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561824044907:android:1fb34dc70a923e4d941e2e",
+        "android_client_info": {
+          "package_name": "com.example.convo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561824044907-v2n9huo6u3ktcj6qgbrqk1f4lu325pdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqnpRVrE4NKGCEZ4TOdQBDrFyTcAYGv28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561824044907-v2n9huo6u3ktcj6qgbrqk1f4lu325pdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

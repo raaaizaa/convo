@@ -1,5 +1,6 @@
 package com.example.convo_app.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +8,31 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.convo_app.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_notification#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class fragment_notification extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public fragment_notification() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_notification.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_notification newInstance(String param1, String param2) {
-        fragment_notification fragment = new fragment_notification();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private Context context;
+    private View view;
+    Integer notificationCount;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_notification, container, false);
+        this.context = getContext();
+
+        Bundle args = getArguments();
+
+        if(args != null){
+            notificationCount = args.getInt("notificationCount");
         }
+
+        showToast(notificationCount);
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+    private void showToast(Integer notificationCount){
+        Toast.makeText(context, "number of notification = " + notificationCount, Toast.LENGTH_SHORT).show();
     }
 }

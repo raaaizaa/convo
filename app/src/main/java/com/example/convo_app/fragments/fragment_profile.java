@@ -17,28 +17,35 @@ public class fragment_profile extends Fragment {
     private View view;
     private Context context;
     private Button loginButton;
+    Integer notificationCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
         this.context = getContext();
+
+        Bundle args = getArguments();
+
+        if (args != null) {
+            notificationCount = args.getInt("notificationCount");
+        }
 
         initialize();
 
         return view;
     }
 
-    private void initialize(){
+    private void initialize() {
         loginButton = view.findViewById(R.id.login_button);
 
         setListener();
     }
 
-    private void setListener(){
+    private void setListener() {
         loginButton.setOnClickListener(e -> showToast("Sorry, this service currently not available!"));
     }
 
-    private void showToast(String message){
+    private void showToast(String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -18,7 +18,7 @@
         android:layout_columnWeight="0.6"
         android:fontFamily="sans-serif-black"
         android:text="convo!"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/day_medium_purple"
         android:textSize="56dp"
         android:textStyle="bold" />

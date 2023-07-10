@@ -3,6 +3,7 @@ package com.example.convo_app.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,9 @@ import com.example.convo_app.R;
 import com.example.convo_app.adapters.post_adapter;
 import com.example.convo_app.models.post;
 import com.example.convo_app.utils.post_database_helper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,16 +40,27 @@ public class fragment_home extends Fragment {
     private String URL = "https://jsonplaceholder.typicode.com/posts";
     private post_adapter adapter;
     private List<post> posts;
+    private List<post> allPost;
     private RequestQueue requestQueue;
     private ProgressBar progressBar;
+    Integer notificationCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         this.context = getContext();
 
+        Bundle args = getArguments();
+
+        if(args != null){
+            notificationCount = args.getInt("notificationCount");
+        }
+
         initialize();
+
+        checkDataFromDatabase();
         fetch();
+
         return view;
     }
 
@@ -54,8 +69,19 @@ public class fragment_home extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
     }
 
-    private void fetch() {
+    private void checkDataFromDatabase(){
         postDb = new post_database_helper(context);
+        allPost = postDb.viewAllPost();
+
+        if(allPost == null){
+            fetch();
+        }else{
+            progressBar.setVisibility(View.GONE);
+            setRecyclerview(allPost, context, notificationCount);
+        }
+    }
+
+    private void fetch() {
         requestQueue = Volley.newRequestQueue(context);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URL, null, response -> {
@@ -76,7 +102,7 @@ public class fragment_home extends Fragment {
                     posts.add(post);
                 }
                 progressBar.setVisibility(View.GONE);
-                setRecyclerview(posts, context);
+                setRecyclerview(posts, context, notificationCount);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -86,8 +112,8 @@ public class fragment_home extends Fragment {
 
     }
 
-    private void setRecyclerview(List<post> posts, Context context) {
-        adapter = new post_adapter(posts, context);
+    private void setRecyclerview(List<post> posts, Context context, Integer notificationCount) {
+        adapter = new post_adapter(posts, context, notificationCount);
         timelineRV.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);

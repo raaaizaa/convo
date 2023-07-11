@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.example.convo_app.R;
 
 public class detailed_post extends AppCompatActivity {
+    private LinearLayout userContainer;
     private ImageView backButton, commentButton, likeButton, saveButton;
     private TextView nameTextview, usernameTextview, titleTextview, bodyTextview;
-    private LinearLayout userContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +47,10 @@ public class detailed_post extends AppCompatActivity {
 
     private void setListener(String userId, String personName, String username) {
         backButton.setOnClickListener(e -> finish());
-
-        userContainer.setOnClickListener(e -> {
-            startProfile(userId, personName, username);
-        });
-
-        commentButton.setOnClickListener(e -> showToast("You're not logged in!"));
-        likeButton.setOnClickListener(e -> showToast("You're not logged in!"));
-        saveButton.setOnClickListener(e -> showToast("You're not logged in!"));
+        userContainer.setOnClickListener(e -> startProfile(userId, personName, username));
+        commentButton.setOnClickListener(e -> showToast());
+        likeButton.setOnClickListener(e -> showToast());
+        saveButton.setOnClickListener(e -> showToast());
     }
 
     private void startProfile(String userId, String personName, String username) {
@@ -65,14 +61,14 @@ public class detailed_post extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setContent(String personName, String username, String title, String body){
+    private void setContent(String personName, String username, String title, String body) {
         nameTextview.setText(personName);
         usernameTextview.setText(username);
         titleTextview.setText(title);
         bodyTextview.setText(body);
     }
 
-    private void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    private void showToast() {
+        Toast.makeText(this, "You are not logged in!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -21,8 +21,8 @@ import com.example.convo_app.models.post;
 import java.util.List;
 
 public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> {
-    private Context context;
-    private List<post> posts;
+    private final Context context;
+    private final List<post> posts;
 
     public post_adapter(List<post> posts, Context context) {
         this.posts = posts;
@@ -30,9 +30,9 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextview, usernameTextview, titleTextview, bodyTextview;
-        private ImageView commentButton, likeButton, saveButton;
-        private LinearLayout userContainer;
+        private final TextView nameTextview, usernameTextview, titleTextview, bodyTextview;
+        private final ImageView commentButton, likeButton, saveButton;
+        private final LinearLayout userContainer;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -80,9 +80,9 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
             startProfile(userId, personName, username);
         });
 
-        holder.commentButton.setOnClickListener(e -> showToast("You're not logged in!"));
-        holder.likeButton.setOnClickListener(e -> showToast("You're not logged in!"));
-        holder.saveButton.setOnClickListener(e -> showToast("You're not logged in!"));
+        holder.commentButton.setOnClickListener(e -> showToast());
+        holder.likeButton.setOnClickListener(e -> showToast());
+        holder.saveButton.setOnClickListener(e -> showToast());
     }
 
     @Override
@@ -100,7 +100,7 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
         context.startActivity(intent);
     }
 
-    private void startProfile(String userId, String personName, String username){
+    private void startProfile(String userId, String personName, String username) {
         Intent intent = new Intent(context, profile.class);
         intent.putExtra("userId", userId);
         intent.putExtra("personName", personName);
@@ -116,7 +116,7 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
         return "@user" + userId;
     }
 
-    private void showToast(String message){
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    private void showToast() {
+        Toast.makeText(context, "You're not logged in!", Toast.LENGTH_SHORT).show();
     }
 }

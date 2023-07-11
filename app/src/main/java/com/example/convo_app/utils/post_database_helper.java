@@ -45,15 +45,15 @@ public class post_database_helper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<post> viewAllPost(){
+    public List<post> viewAllPost() {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT * FROM post";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         posts = new ArrayList<>();
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 Integer userId = cursor.getInt(cursor.getColumnIndex("userId"));
                 Integer id = cursor.getInt(cursor.getColumnIndex("id"));
                 String title = cursor.getString(cursor.getColumnIndex("title"));
@@ -81,15 +81,15 @@ public class post_database_helper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<post> viewPost(Integer userId){
+    public List<post> viewPost(Integer userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT * FROM post WHERE userId = ?";
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(userId)});
 
         posts = new ArrayList<>();
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 Integer id = cursor.getInt(cursor.getColumnIndex("id"));
                 String title = cursor.getString(cursor.getColumnIndex("title"));
                 String body = cursor.getString(cursor.getColumnIndex("body"));

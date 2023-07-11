@@ -15,10 +15,6 @@ public class post {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -31,15 +27,7 @@ public class post {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getBody() {
         return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 }

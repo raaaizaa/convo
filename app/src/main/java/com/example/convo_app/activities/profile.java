@@ -13,13 +13,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.convo_app.R;
 import com.example.convo_app.adapters.post_adapter;
@@ -30,16 +27,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class profile extends AppCompatActivity {
+    private static final int NOTIFICATION_ID = 100;
+    private static final String CHANNEL_ID = "My Channel";
+    private SharedPreferences sharedPreferences;
     private post_database_helper postDb;
     private List<post> posts;
+    private post_adapter adapter;
     private TextView personNameTextview, usernameTextview, userIdTextview;
     private RecyclerView postRV;
     private Button followButton;
-    private post_adapter adapter;
     private ImageView backButton;
-    private String CHANNEL_ID = "My Channel";
-    private static final int NOTIFICATION_ID = 100;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +65,7 @@ public class profile extends AppCompatActivity {
 
     private void setListener() {
         backButton.setOnClickListener(e -> finish());
-
-        followButton.setOnClickListener(e -> {
-            showToast("Clicked");
-            showNotification();
-        });
-
+        followButton.setOnClickListener(e -> showNotification());
     }
 
     @SuppressLint("SetTextI18n")
@@ -98,23 +90,16 @@ public class profile extends AppCompatActivity {
         postRV.setLayoutManager(layoutManager);
     }
 
-    private void showNotification(){
-        NotificationManager notificationManager =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    private void showNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification;
 
-        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
-            notification = new Notification.Builder(this)
-                    .setSmallIcon(R.drawable.baseline_notifications_active_24)
-                    .setContentText("You're not logged in!")
-                    .setChannelId(CHANNEL_ID)
-                    .build();
-            notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "New Channel", NotificationManager.IMPORTANCE_HIGH));
-        }else {
-            notification = new Notification.Builder(this)
-                    .setSmallIcon(R.drawable.baseline_notifications_active_24)
-                    .setContentText("You're not logged in!")
-                    .build();
-        }
+        notification = new Notification.Builder(this)
+                .setSmallIcon(R.drawable.baseline_notifications_active_24)
+                .setContentText("You are not logged in!")
+                .setChannelId(CHANNEL_ID)
+                .build();
+        notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "New Channel", NotificationManager.IMPORTANCE_HIGH));
 
         notificationManager.notify(NOTIFICATION_ID, notification);
         countNotification();
@@ -122,18 +107,7 @@ public class profile extends AppCompatActivity {
 
     private void countNotification() {
         final SharedPreferences sharedPref = this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE);
-        final int count = sharedPref.getInt(COUNT, 0);
-
         int value = sharedPref.getInt(COUNT, 0);
-        Log.i("PROFILE SEBELUM DITAMBAH", String.valueOf(value));
-
-        sharedPref.edit().putInt(COUNT, (value+1)).apply();
-        int refreshedValue = sharedPref.getInt(COUNT, 0);
-        Log.i("PROFILE SETELAH DITAMBAH", String.valueOf(refreshedValue));
-    }
-
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        sharedPref.edit().putInt(COUNT, (value + 1)).apply();
     }
 }

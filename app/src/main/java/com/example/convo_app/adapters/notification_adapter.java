@@ -12,17 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.convo_app.R;
 
 public class notification_adapter extends RecyclerView.Adapter<notification_adapter.ViewHolder> {
+    private final Context context;
+    private final int itemCount;
 
-    private Context context;
-    private int itemCount;
-
-    public notification_adapter(Context context, int itemCount){
+    public notification_adapter(Context context, int itemCount) {
         this.context = context;
         this.itemCount = itemCount;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public ViewHolder(@NonNull View view){
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(@NonNull View view) {
             super(view);
         }
     }
@@ -36,9 +35,7 @@ public class notification_adapter extends RecyclerView.Adapter<notification_adap
 
     @Override
     public void onBindViewHolder(@NonNull notification_adapter.ViewHolder holder, int position) {
-        holder.itemView.setOnClickListener(e -> {
-            showToast();
-        });
+        holder.itemView.setOnClickListener(e -> showToast());
     }
 
     @Override
@@ -46,7 +43,7 @@ public class notification_adapter extends RecyclerView.Adapter<notification_adap
         return itemCount;
     }
 
-    public void showToast(){
+    public void showToast() {
         Toast.makeText(context, "Sorry, this service currently not available!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -25,8 +25,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,19 +77,27 @@
                     android:id="@+id/follow_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="FOLLOW"
                     android:background="@drawable/button_styling"
+                    android:text="FOLLOW"
                     android:textColor="@color/white" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="12dp"
+                android:background="#cfcfcf" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="12dp"
-                android:text="POSTS"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Posts"
                 android:textAlignment="center"
                 android:textSize="24dp"
+                android:layout_marginBottom="12dp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView

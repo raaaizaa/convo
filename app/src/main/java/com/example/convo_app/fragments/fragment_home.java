@@ -3,7 +3,6 @@ package com.example.convo_app.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,9 +21,6 @@ import com.example.convo_app.R;
 import com.example.convo_app.adapters.post_adapter;
 import com.example.convo_app.models.post;
 import com.example.convo_app.utils.post_database_helper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,16 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class fragment_home extends Fragment {
-    private View view;
-    private Context context;
-    private RecyclerView timelineRV;
     private post_database_helper postDb;
-    private String URL = "https://jsonplaceholder.typicode.com/posts";
     private post_adapter adapter;
     private List<post> posts;
     private List<post> allPost;
+    private View view;
+    private Context context;
+    private RecyclerView timelineRV;
     private RequestQueue requestQueue;
     private ProgressBar progressBar;
+    private static final String URL = "https://jsonplaceholder.typicode.com/posts";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,7 +97,6 @@ public class fragment_home extends Fragment {
             }
         }, Throwable::printStackTrace);
         requestQueue.add(request);
-
     }
 
     private void setRecyclerview(List<post> posts, Context context) {
@@ -115,5 +110,4 @@ public class fragment_home extends Fragment {
     private void insertToDatabase(Integer userId, Integer id, String title, String body) {
         postDb.createPost(id, userId, title, body);
     }
-
 }

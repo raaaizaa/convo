@@ -22,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class home extends AppCompatActivity {
-
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -30,9 +29,35 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        refreshingNotification();
+        refreshNotification();
         firebaseSetup();
         initialize();
+    }
+
+    private void refreshNotification() {
+        SharedPreferences sharedPref = this.getSharedPreferences(counter.PREFS_KEY, Context.MODE_PRIVATE);
+        sharedPref.edit().putInt(counter.COUNT, 0).apply();
+    }
+
+    private void firebaseSetup() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    String token = task.getResult();
+                    Log.d(TAG, "Token: " + token);
+                });
+
+        FirebaseMessaging.getInstance().subscribeToTopic("loggedin")
+                .addOnCompleteListener(task -> {
+                    String message = "Success!";
+                    if (!task.isSuccessful()) {
+                        message = "Failed!";
+                    }
+                    Log.d(TAG, "Subscribe to topic " + message);
+                });
     }
 
     private void initialize() {
@@ -50,18 +75,15 @@ public class home extends AppCompatActivity {
                     fragment_home homeFragment = new fragment_home();
                     replaceFragment(homeFragment);
                     return true;
-
                 case R.id.navigation_notification:
                     fragment_notification notificationFragment = new fragment_notification();
                     replaceFragment(notificationFragment);
                     return true;
-
                 case R.id.navigation_profile:
                     fragment_profile profileFragment = new fragment_profile();
                     replaceFragment(profileFragment);
                     return true;
             }
-
             return false;
         });
 
@@ -73,32 +95,6 @@ public class home extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
-    }
-
-    private void firebaseSetup() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-                    String token = task.getResult();
-                    Log.d(TAG, "Token: " + token);
-                });
-
-        FirebaseMessaging.getInstance().subscribeToTopic("loggedin")
-                .addOnCompleteListener(task -> {
-                    String message = "done";
-                    if (!task.isSuccessful()) {
-                        message = "failed";
-                    }
-                });
-    }
-
-    private void refreshingNotification() {
-        SharedPreferences sharedPref = this.getSharedPreferences(counter.PREFS_KEY, Context.MODE_PRIVATE);
-        sharedPref.edit().putInt(counter.COUNT, 0).apply();
-        int refreshedValue = sharedPref.getInt(counter.COUNT, 0);
     }
 
 }

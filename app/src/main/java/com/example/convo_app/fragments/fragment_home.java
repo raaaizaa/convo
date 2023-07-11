@@ -43,21 +43,13 @@ public class fragment_home extends Fragment {
     private List<post> allPost;
     private RequestQueue requestQueue;
     private ProgressBar progressBar;
-    Integer notificationCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         this.context = getContext();
 
-        Bundle args = getArguments();
-
-        if(args != null){
-            notificationCount = args.getInt("notificationCount");
-        }
-
         initialize();
-
         checkDataFromDatabase();
         fetch();
 
@@ -69,15 +61,15 @@ public class fragment_home extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
     }
 
-    private void checkDataFromDatabase(){
+    private void checkDataFromDatabase() {
         postDb = new post_database_helper(context);
         allPost = postDb.viewAllPost();
 
-        if(allPost == null){
+        if (allPost == null) {
             fetch();
-        }else{
+        } else {
             progressBar.setVisibility(View.GONE);
-            setRecyclerview(allPost, context, notificationCount);
+            setRecyclerview(allPost, context);
         }
     }
 
@@ -102,7 +94,7 @@ public class fragment_home extends Fragment {
                     posts.add(post);
                 }
                 progressBar.setVisibility(View.GONE);
-                setRecyclerview(posts, context, notificationCount);
+                setRecyclerview(posts, context);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -112,8 +104,8 @@ public class fragment_home extends Fragment {
 
     }
 
-    private void setRecyclerview(List<post> posts, Context context, Integer notificationCount) {
-        adapter = new post_adapter(posts, context, notificationCount);
+    private void setRecyclerview(List<post> posts, Context context) {
+        adapter = new post_adapter(posts, context);
         timelineRV.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -123,4 +115,5 @@ public class fragment_home extends Fragment {
     private void insertToDatabase(Integer userId, Integer id, String title, String body) {
         postDb.createPost(id, userId, title, body);
     }
+
 }

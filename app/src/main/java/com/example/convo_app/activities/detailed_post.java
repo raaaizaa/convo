@@ -40,7 +40,6 @@ public class detailed_post extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
         String title = getIntent().getStringExtra("title");
         String body = getIntent().getStringExtra("body");
-        Integer notificationCounter = getIntent().getIntExtra("notificationCounter", 0);
 
         setListener(userId, personName, username);
         setContent(personName, username, title, body);

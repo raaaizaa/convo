@@ -23,12 +23,10 @@ import java.util.List;
 public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> {
     private Context context;
     private List<post> posts;
-    private Integer notificationCounter;
 
-    public post_adapter(List<post> posts, Context context, Integer notificationCounter) {
+    public post_adapter(List<post> posts, Context context) {
         this.posts = posts;
         this.context = context;
-        this.notificationCounter = notificationCounter;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +69,7 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
             String title = post.getTitle();
             String body = post.getBody();
 
-            startDetailedPost(userId, personName, username, title, body, notificationCounter);
+            startDetailedPost(userId, personName, username, title, body);
         });
 
         holder.userContainer.setOnClickListener(e -> {
@@ -79,7 +77,7 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
             String personName = getPersonName(post.getUserId());
             String username = getUsername(post.getUserId());
 
-            startProfile(userId, personName, username, notificationCounter);
+            startProfile(userId, personName, username);
         });
 
         holder.commentButton.setOnClickListener(e -> showToast("You're not logged in!"));
@@ -92,23 +90,21 @@ public class post_adapter extends RecyclerView.Adapter<post_adapter.ViewHolder> 
         return posts.size();
     }
 
-    private void startDetailedPost(String userId, String personName, String username, String title, String body, Integer notificationCounter) {
+    private void startDetailedPost(String userId, String personName, String username, String title, String body) {
         Intent intent = new Intent(context, detailed_post.class);
         intent.putExtra("userId", userId);
         intent.putExtra("personName", personName);
         intent.putExtra("username", username);
         intent.putExtra("title", title);
         intent.putExtra("body", body);
-        intent.putExtra("notificationCounter", notificationCounter);
         context.startActivity(intent);
     }
 
-    private void startProfile(String userId, String personName, String username, Integer notificationCounter){
+    private void startProfile(String userId, String personName, String username){
         Intent intent = new Intent(context, profile.class);
         intent.putExtra("userId", userId);
         intent.putExtra("personName", personName);
         intent.putExtra("username", username);
-        intent.putExtra("notificationCounter", notificationCounter);
         context.startActivity(intent);
     }
 
